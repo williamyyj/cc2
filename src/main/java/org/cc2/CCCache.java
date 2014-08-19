@@ -18,9 +18,10 @@ public class CCCache {
 
     private static ConcurrentHashMap<String, CCCacheItem> cache;
 
+
     public static ConcurrentHashMap cache() {
         if (cache == null) {
-            cache = new ConcurrentHashMap<String, CCCacheItem>();
+            cache = new ConcurrentHashMap<>();
         }
         return cache;
     }
@@ -34,6 +35,7 @@ public class CCCache {
          return load_map(new File(base,fid), "UTF-8");
     }
 
+    @SuppressWarnings("unchecked")
     public static CCMap load_map(File f, String enc) {
         if (f == null) {
             return null;
@@ -56,7 +58,7 @@ public class CCCache {
         }
     }
 
-    
+    @SuppressWarnings("unchecked")
     private static synchronized CCMap reload_map(File f, String enc) {
         CCCacheItem<CCMap> item = new CCCacheItem<>();
         try {

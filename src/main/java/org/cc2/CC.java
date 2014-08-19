@@ -5,15 +5,12 @@
  */
 package org.cc2;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import org.cc2.fun.ccprint_list;
 import org.cc2.fun.ccprint_map;
 import org.cc2.fun.text_quote;
@@ -24,42 +21,39 @@ import org.cc2.fun.text_quote;
  */
 public class CC {
 
-    public static Optional<Integer> _int(Object o) {
+    public static BiFunction<Object,Integer,Integer> _int = (o,dv) ->{
         if (o instanceof Number) {
-            return Optional.of(((Number) o).intValue());
+            return ((Number) o).intValue() ; 
         } else if (o instanceof String) {
             String text = ((String) o).trim();
-            return Optional.of(Integer.parseInt(text));
+            return Integer.parseInt(text);
         }
-        return Optional.empty();
-    }
+        return dv;
+    };
     
-   
-
-    public static Function<Object, Optional<Long>> _long = (o) -> {
+    public static BiFunction<Object,Long,Long> _long = (o,dv) -> {
         if (o instanceof Number) {
-            return Optional.of(((Number) o).longValue());
+            return ((Number) o).longValue();
         } else if (o instanceof String) {
             String text = ((String) o).trim();
-            return Optional.of(Long.parseLong(text));
+            return Long.parseLong(text);
         }
-        return Optional.empty();
+        return dv;
     };
 
-    public static Function<Object, Optional<Double>> _double = (o) -> {
+    public static BiFunction<Object, Double, Double> _double = (o,dv) -> {
         if (o instanceof Number) {
-            return Optional.of(((Number) o).doubleValue());
+            return ((Number) o).doubleValue();
         } else if (o instanceof String) {
             String text = ((String) o).trim();
-            return Optional.of(Double.parseDouble(text));
+            return Double.parseDouble(text);
         }
-        return Optional.empty();
+        return dv ; 
     };
     
    
 
-    public static Function<Object, Optional<Date>> _date
-        = (o) -> (o instanceof Date) ? Optional.of((Date) o) : Optional.empty();
+    public static BiFunction<Object,Date,Date> _date =  (o,dv) -> (o instanceof Date) ? (Date) o : dv ; 
 
     public static Function<String, String> str_to_js = new text_quote();
     public static Function<Number, String> jo_out_num = (o) -> String.valueOf(o);

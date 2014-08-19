@@ -45,9 +45,8 @@ public class CCMap extends HashMap<String, Object> implements ICCMap {
 
     public static void main(String[] args){
         CCMap m = new CCMap();
-        m.put("xx", 1000);
-        double ret = m.as(CC._double,"xx1",Optional.empty());
-        System.out.println( ret );
+        m.put("xx", "1000");
+        System.out.println(m.toString("\t"));
     }
 
 
