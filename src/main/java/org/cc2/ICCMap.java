@@ -27,5 +27,9 @@ public interface ICCMap extends Map<String, Object> {
     default double _double(String k) { return as(CC._double,k,0.0) ; } 
 
     default Date _date(String k) { return as(CC._date,k,new Date()) ; } 
+    
+    default String _string(String k){  return this.getOrDefault(k, "").toString();}
+    
+    default String _string(String k, String dv){  return this.getOrDefault(k, dv).toString();}
      
 }

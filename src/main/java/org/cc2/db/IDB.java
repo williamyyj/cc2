@@ -6,6 +6,7 @@
 
 package org.cc2.db;
 
+import java.sql.SQLException;
 import java.util.List;
 import org.cc2.ICCDP;
 
@@ -15,9 +16,13 @@ import org.cc2.ICCDP;
  * @param <M> 資料模型
  */
 public interface IDB<M> extends ICCDP<M> {
-    public M row(M mq) throws Exception ; 
-    public List<M> rows(M mq) throws Exception ; 
-    public Object fun(M mq) throws Exception ; 
-    public int save(M mq) throws Exception ; 
-    public int delete(M mq) throws Exception ; 
+   public String base();
+   public String database();
+   public String schema();
+   public String catalog();
+   public M row(String sql , Object ... params) throws SQLException ; 
+   public List<M> rows(String sql , Object ... params) throws SQLException ; 
+   public Object fun(String sql , Object ... params) throws SQLException ; 
+   public int execut(String sql , Object ... params) throws SQLException ; 
+   public int[] batch(String sql, List<Object[]> data) throws SQLException ; 
 }

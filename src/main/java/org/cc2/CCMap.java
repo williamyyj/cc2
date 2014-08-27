@@ -26,6 +26,7 @@ public class CCMap extends HashMap<String, Object> implements ICCMap {
         return Optional.of(this);
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
@@ -42,13 +43,5 @@ public class CCMap extends HashMap<String, Object> implements ICCMap {
     public String toString(String indent) {
         return CC.json_map.print(this, null, indent);
     }
-
-    public static void main(String[] args){
-        CCMap m = new CCMap();
-        m.put("xx", "1000");
-        System.out.println(m.toString("\t"));
-    }
-
-
-
+    
 }
