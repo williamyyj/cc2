@@ -8,14 +8,12 @@ package org.cc2;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import org.cc2.fun.ccprint_list;
 import org.cc2.fun.ccprint_map;
 import org.cc2.fun.text_quote;
-import org.cc2.type.CCTypes;
 
 /**
  *
