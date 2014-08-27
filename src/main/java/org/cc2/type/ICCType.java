@@ -32,7 +32,7 @@ public interface ICCType<E> {
 
     public Class<?> nativeClass();
 
-    public int dt_sql();
+    public int jdbc();
 
     public E value(Object o);
 

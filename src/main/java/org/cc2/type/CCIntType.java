@@ -46,7 +46,7 @@ public class CCIntType extends CCBaseType<Integer> {
         return Integer.TYPE;
     }
 
-    public int dt_sql() {
+    public int jdbc() {
         return Types.INTEGER;
     }
 }

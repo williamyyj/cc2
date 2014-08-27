@@ -23,5 +23,10 @@ public abstract class CCBaseType<E> implements ICCType<E> {
     public String sql_value(Object value) {
         return (value!=null) ? String.valueOf(value(value)) : "NULL";
     }
+    
+    @Override
+    public String toString(){
+        return dt();
+    }
 
 }

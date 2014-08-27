@@ -6,15 +6,16 @@ package org.cc2.type;
 
 import java.sql.Types;
 import java.util.HashMap;
+import java.util.Map;
 import org.cc2.ICCInit;
-
 
 /**
  *
  * @author william
  */
-public class CCTypes extends HashMap<Object, ICCType<?>> {
+public class CCTypes {
 
+    private Map<Object, ICCType<?>> types;
     protected ICCType<Object> var_type = new CCVarType();
     protected ICCType<Boolean> bool_type = new CCBoolType();
     protected ICCType<Integer> int_type = new CCIntType();
@@ -26,17 +27,21 @@ public class CCTypes extends HashMap<Object, ICCType<?>> {
     protected ICCType<String> clob_type = new CCClobType();
 
     public CCTypes() {
-        init_commons();
+        this(null);
     }
 
     public CCTypes(String database) {
-        this();
+        types = new HashMap<>();
+        init_commons();
         try {
-            ICCInit init = (ICCInit) Class.forName("org.cc2.type." + database + "_init").newInstance();
-            init.__init__(this);
+            if (database != null) {
+                ICCInit init = (ICCInit) Class.forName("org.cc2.type." + database + "_init").newInstance();
+                init.__init__(types);
+            }
         } catch (Exception ex) {
             System.out.println("Can't find org.cc2.type." + database + "_init");
         }
+
     }
 
     private void init_commons() {
@@ -50,18 +55,18 @@ public class CCTypes extends HashMap<Object, ICCType<?>> {
         put(Types.DECIMAL, long_type);
         put(Types.BIGINT, long_type);
         put(Types.DOUBLE, double_type);
-        put(Types.NUMERIC, double_type);
+        put(Types.NUMERIC, long_type);
         put(Types.VARCHAR, string_type);
         put(Types.CHAR, string_type);
     }
 
     public ICCType<?> type(Object dt) {
-        ICCType<?> type = get(dt);
+        ICCType<?> type = types.get(dt);
         return (type != null) ? type : var_type;
     }
 
     public ICCType<?> type(int dt) {
-        ICCType<?> type = get(dt);
+        ICCType<?> type = types.get(dt);
         return (type != null) ? type : new CCVarType(dt);
     }
 
@@ -74,17 +79,21 @@ public class CCTypes extends HashMap<Object, ICCType<?>> {
             name = "string";
         }
 
-        ICCType<?> type = get(name);
+        ICCType<?> type = types.get(name);
         if (type != null) {
             return type;
         } else {
-            type = get(dt);
+            type = types.get(dt);
         }
         return (type != null) ? type : var_type;
     }
 
     public ICCType<?> var_type() {
         return var_type;
+    }
+    
+    public ICCType<?> put(Object k , ICCType<?> type){
+        return types.put(k, type);
     }
 
 }

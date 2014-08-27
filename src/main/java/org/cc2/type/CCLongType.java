@@ -49,7 +49,7 @@ public class CCLongType extends CCBaseType<Long> {
         return Long.TYPE;
     }
     
-    public int dt_sql() {
+    public int jdbc() {
         return Types.DECIMAL;
     }
 

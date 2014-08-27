@@ -12,10 +12,12 @@ import java.sql.Types;
 
 public class CCDoubleType extends CCBaseType<Double> {
 
+    @Override
     public String dt() {
         return dt_double;
     }
 
+    @Override
     public Double value(Object o, Double dv) {
         try {
             if (o instanceof Number) {
@@ -30,19 +32,23 @@ public class CCDoubleType extends CCBaseType<Double> {
         return dv;
     }
 
+    @Override
     public Double getRS(ResultSet rs, String name) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet.");
+      return rs.getDouble(name);
     }
 
+    @Override
     public void setPS(PreparedStatement ps, int idx, Object value) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    @Override
     public Class<?> nativeClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return double.class;
     }
     
-    public int dt_sql(){
+    @Override
+    public int jdbc(){
         return Types.DOUBLE;
     }
     

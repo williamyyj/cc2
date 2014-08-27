@@ -36,7 +36,7 @@ public class CCBlobType extends CCBaseType<byte[]> {
         } 
     }
 
-    public int dt_sql() {
+    public int jdbc() {
         return Types.BLOB;
     }
     

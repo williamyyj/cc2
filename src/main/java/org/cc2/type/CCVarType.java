@@ -46,7 +46,7 @@ public class CCVarType extends CCBaseType<Object> {
         return Object.class;
     }
     
-    public int dt_sql(){
+    public int jdbc(){
         return dt_sql;
     }
     

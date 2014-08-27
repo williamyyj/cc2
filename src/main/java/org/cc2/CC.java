@@ -21,17 +21,17 @@ import org.cc2.fun.text_quote;
  */
 public class CC {
 
-    public static BiFunction<Object,Integer,Integer> _int = (o,dv) ->{
+    public static BiFunction<Object, Integer, Integer> _int = (o, dv) -> {
         if (o instanceof Number) {
-            return ((Number) o).intValue() ; 
+            return ((Number) o).intValue();
         } else if (o instanceof String) {
             String text = ((String) o).trim();
             return Integer.parseInt(text);
         }
         return dv;
     };
-    
-    public static BiFunction<Object,Long,Long> _long = (o,dv) -> {
+
+    public static BiFunction<Object, Long, Long> _long = (o, dv) -> {
         if (o instanceof Number) {
             return ((Number) o).longValue();
         } else if (o instanceof String) {
@@ -41,19 +41,18 @@ public class CC {
         return dv;
     };
 
-    public static BiFunction<Object, Double, Double> _double = (o,dv) -> {
+    public static BiFunction<Object, Double, Double> _double = (o, dv) -> {
         if (o instanceof Number) {
             return ((Number) o).doubleValue();
         } else if (o instanceof String) {
             String text = ((String) o).trim();
             return Double.parseDouble(text);
         }
-        return dv ; 
+        return dv;
     };
-    
-   
 
-    public static BiFunction<Object,Date,Date> _date =  (o,dv) -> (o instanceof Date) ? (Date) o : dv ; 
+    public static BiFunction<Object, String, String> _string = (o, dv) -> o != null ? o.toString() : dv;
+    public static BiFunction<Object, Date, Date> _date = (o, dv) -> (o instanceof Date) ? (Date) o : dv;
 
     public static Function<String, String> str_to_js = new text_quote();
     public static Function<Number, String> jo_out_num = (o) -> String.valueOf(o);

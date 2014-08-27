@@ -78,7 +78,7 @@ public class CCDateType extends CCBaseType<Date> {
         return Date.class;
     }
 
-    public int dt_sql() {
+    public int jdbc() {
         return Types.TIMESTAMP;
     }
 

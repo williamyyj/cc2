@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * @author William 取代IDB提供不同資料來源資料異動
+ * @param <M>
  */
 public interface ICCDP<M> {
 

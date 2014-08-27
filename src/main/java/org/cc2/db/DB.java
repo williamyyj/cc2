@@ -1,90 +1,85 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package org.cc2.db;
 
+import java.sql.ParameterMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import org.cc2.CCMap;
+import org.cc2.fun.db.FDBPSFill;
+import org.cc2.fun.db.FDBRSMeta;
+import org.cc2.fun.db.FDBRSRow;
+import org.cc2.type.CCTypes;
 
 /**
  * @author William
  */
+public class DB extends DBConfig {
 
-public class DB implements IDB<CCMap> {
+    private BiFunction<CCTypes, ResultSet, List<Map<String, Object>>> fdb_rs_meta;
+    private BiFunction<List<Map<String, Object>>, ResultSet, Map<String, Object>> fdb_rs_row;
+    private BiConsumer<PreparedStatement, Object[]> fdb_ps_fill;
 
-    @Override
-    public String base() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DB() {
+        this(null, "db");
     }
 
-    @Override
-    public String database() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DB(String base, String id) {
+        super(base, id);
+        __init__();
     }
 
-    @Override
-    public String schema() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void __init__() {
+        fdb_rs_meta = new FDBRSMeta();
+        fdb_rs_row = new FDBRSRow();
+        fdb_ps_fill = new FDBPSFill();
     }
 
-    @Override
-    public String catalog() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Map<String, Object>> rows(String sql, Object... params) throws SQLException {
+        List<Map<String, Object>> ret = new ArrayList<>();
+        PreparedStatement ps = connection().prepareStatement(sql);
+        ResultSet rs = null;
+        try {
+            fdb_ps_fill.accept(ps, params);
+            rs = ps.executeQuery();
+            List<Map<String, Object>> rs_meta = fdb_rs_meta.apply(types, rs);
+            while (rs.next()) {
+                ret.add(fdb_rs_row.apply(rs_meta, rs));
+            }
+        } finally {
+            __release(rs, ps);
+        }
+        return ret;
     }
 
-    @Override
-    public CCMap row(String sql, Object... params) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Map<String, Object> row(String sql, Object ... params) throws SQLException {
+        PreparedStatement ps = connection().prepareStatement(sql);
+        ResultSet rs = null;
+        try {
+            fdb_ps_fill.accept(ps, params);
+            rs = ps.executeQuery();
+            List<Map<String, Object>> rs_meta = fdb_rs_meta.apply(types, rs);
+            return (rs.next()) ? fdb_rs_row.apply(rs_meta, rs) : null ;
+        } finally {
+            __release(rs, ps);
+        }
     }
 
-    @Override
-    public List<CCMap> rows(String sql, Object... params) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public static void main(String[] args) throws Exception {
+        String base = System.getProperty("base", "C:\\Users\\William\\Dropbox\\resources\\prj\\sonix");
+        DB db = new DB(base, "db");
+        try {
+            List<Map<String, Object>> rows = db.rows("select * from fae where fae_id = ? ", 2);
+            rows.forEach(System.out::println);
+            Map<String, Object> row = db.row("select * from fae where fae_id = ? ", 3);
+            System.out.println(row.get("FAE_MT"));       
+        } finally {
+            db.close();
+        }
     }
 
-    @Override
-    public Object fun(String sql, Object... params) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int execut(String sql, Object... params) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int[] batch(String sql, List<Object[]> data) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public CCMap row(CCMap mq) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<CCMap> rows(CCMap mq) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public <T> T fun(Class<T> c, CCMap mq) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int execute(CCMap mq) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int[] execute(List<CCMap> mqs) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
 }

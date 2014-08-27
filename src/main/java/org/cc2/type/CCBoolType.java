@@ -44,7 +44,7 @@ public class CCBoolType extends CCBaseType<Boolean> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public int dt_sql() {
+    public int jdbc() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

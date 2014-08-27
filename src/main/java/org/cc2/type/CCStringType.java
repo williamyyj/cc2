@@ -40,7 +40,7 @@ public class CCStringType extends CCBaseType<String> {
         return String.class;
     }
 
-    public int dt_sql() {
+    public int jdbc() {
         return Types.VARCHAR;
     }
 

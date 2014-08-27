@@ -4,6 +4,8 @@
 package org.cc2.db;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,6 +13,7 @@ import javax.sql.DataSource;
 import org.cc.org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.cc2.CCConfig;
 import org.cc2.CCMap;
+import org.cc2.type.CCTypes;
 
 /**
  *
@@ -21,7 +24,13 @@ public class DBConfig extends CCConfig {
     protected static Map<String, DataSource> mds;
     private Connection conn;
     private String dsId ;
-    private CCMap res ;     
+    protected CCMap res ;
+    protected CCTypes types ; 
+    
+    
+    public DBConfig(){
+        this(null,"db");
+    }
     
     public  DBConfig(String base, String id ){
         super(base);
@@ -34,6 +43,7 @@ public class DBConfig extends CCConfig {
             throw new RuntimeException("Can't find tag id");
         }
         dsId = res._string("id","dsId"); 
+        types = new CCTypes(res._string("database"));
     }
 
     public Connection connection() throws SQLException {
@@ -88,18 +98,28 @@ public class DBConfig extends CCConfig {
         return mds;
     }
     
+    public CCTypes types(){
+        return types ; 
+    }
+    
+     protected void __release(ResultSet rs, PreparedStatement ps) throws SQLException {
+        if (rs != null) {
+            rs.close();
+            rs = null;
+        }
+        if (ps != null) {
+            ps.close();
+            ps = null;
+        }
+    }
+    
     public void close() throws SQLException{
         if(conn!=null){
             conn.close();
         }
     }
     
-    public static void main(String args[]) throws SQLException {
-        String base = "C:\\Users\\William\\Dropbox\\resources\\prj\\sonix";
-        DBConfig cfg = new DBConfig(base,"db") ; 
-        System.out.println(cfg.connection());
-        cfg.close();
-    }
+
     
     
 }
