@@ -104,6 +104,7 @@ public class CC {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void indent(StringBuilder sb, String indent, String value) {
         if (indent != null) {
             sb.append(indent).append(value);
@@ -111,10 +112,9 @@ public class CC {
             sb.append(value);
         }
     }
-
-  
-
-    public static <T> T as(Class<T> c, Map<String,Object> cm,  String k) {
+    
+    @SuppressWarnings("unchecked")
+    public static <T> T as(Class<T> c, Map<String, Object> cm, String k) {
         return (T) cm.get(k);
     }
 

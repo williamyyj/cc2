@@ -22,24 +22,26 @@ import org.cc2.type.ICCType;
  */
 public class FDBCMFill implements BiConsumer<PreparedStatement, Map<String, Object>> {
 
+    @SuppressWarnings("unchecked")
     @Override
     public void accept(PreparedStatement ps, Map<String, Object> cm) {
         List<Object> cols = CC.as(List.class, cm, "$cols");
         if (cols != null) {
-            int idx = 1 ; 
-            for(Object o : cols){
+            int idx = 1;
+            for (Object o : cols) {
                 String k = (String) o;
-                Map m = CC.as(Map.class,cm,k);
-                proc_set_ps(ps,idx++,m);            
+                Map m = CC.as(Map.class, cm, k);
+                proc_set_ps(ps, idx++, m);
             }
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void proc_set_ps(PreparedStatement ps, int idx, Map m) {
         try {
             ICCType type = CC.as(ICCType.class, m, "type");
             Object value = m.get("value");
-            type.setPS(ps, idx , value);
+            type.setPS(ps, idx, value);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

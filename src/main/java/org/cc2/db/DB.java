@@ -1,6 +1,5 @@
 package org.cc2.db;
 
-import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import org.cc2.CCMap;
 import org.cc2.fun.db.FDBPSFill;
 import org.cc2.fun.db.FDBRSMeta;
 import org.cc2.fun.db.FDBRSRow;
@@ -70,11 +68,23 @@ public class DB extends DBConfig {
         }
     }
 
-    public int execute(String sql, Object... params) throws SQLException {
-        PreparedStatement ps = connection().prepareStatement(sql); 
+    public Object fun(String sql, Object... params) throws SQLException {
+        PreparedStatement ps = connection().prepareStatement(sql);
+        ResultSet rs = null;
         try {
             fdb_ps_fill.accept(ps, params);
-            return  ps.executeUpdate();
+            rs = ps.executeQuery();
+            return (rs.next()) ? rs.getObject(1) : null;
+        } finally {
+            __release(rs, ps);
+        }
+    }
+
+    public int execute(String sql, Object... params) throws SQLException {
+        PreparedStatement ps = connection().prepareStatement(sql);
+        try {
+            fdb_ps_fill.accept(ps, params);
+            return ps.executeUpdate();
         } finally {
             __release(null, ps);
         }
@@ -84,11 +94,12 @@ public class DB extends DBConfig {
         String base = System.getProperty("base", "C:\\Users\\William\\Dropbox\\resources\\prj\\sonix");
         DB db = new DB(base, "db");
         try {
-            List<Map<String, Object>> rows = db.rows("select * from fae where fae_id = ? ", 2);
+            db.execute("UPDATE fae SET FAE_MT = ?  WHERE FAE_ID = ? ", new Date(), 3);
+            List<Map<String, Object>> rows = db.rows("select * from fae");
             rows.forEach(System.out::println);
-           /// Map<String, Object> row = db.row("select * from fae where fae_id = ? ", 3);
-            //System.out.println(row.get("FAE_MT"));
-            //db.execute("UPDATE fae SET FAE_MT = ?  WHERE FAE_ID = ? ", new Date(), 3);
+            Object count = db.fun("select count(*) from fae");
+            System.out.println(count);
+
         } finally {
             db.close();
         }

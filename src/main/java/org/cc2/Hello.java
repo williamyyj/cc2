@@ -12,15 +12,14 @@ package org.cc2;
 public class Hello {
 
     public static void main(String[] args) {
-       // Runnable r1 = () -> System.out.println(this.getClass());
+        //Runnable r1 = () -> System.out.println(getClass());
         Runnable r2 = () -> System.out.println("Hello world two!");
 
         Runnable r3 = new Runnable() {
             public void run() {
-                System.out.println("r2: " + this.getClass());
+                System.out.println(getClass());
             }
         };
-      //  r1.run();
         r2.run();
         r3.run();
     }
