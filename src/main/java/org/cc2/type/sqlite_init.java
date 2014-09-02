@@ -4,6 +4,7 @@
  */
 package org.cc2.type;
 
+import org.cc2.ICCType;
 import java.sql.Types;
 import java.util.Map;
 import org.cc2.ICCInit;

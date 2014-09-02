@@ -8,6 +8,8 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 import org.cc2.ICCInit;
+import org.cc2.ICCParam;
+import org.cc2.ICCType;
 
 /**
  *
@@ -72,10 +74,7 @@ public class CCTypes {
 
     public ICCType<?> type(int dt, String dt_name) {
         String name = dt_name.toLowerCase();
-        if (name.startsWith("varchar")) {
-            name = "string";
-        }
-        if (name.startsWith("nvarchar")) {
+        if (name.startsWith("varchar") || name.startsWith("nvarchar")) {
             name = "string";
         }
 
@@ -91,9 +90,30 @@ public class CCTypes {
     public ICCType<?> var_type() {
         return var_type;
     }
-    
-    public ICCType<?> put(Object k , ICCType<?> type){
+
+    public ICCType<?> put(Object k, ICCType<?> type) {
         return types.put(k, type);
+    }
+
+    /*
+     *   串流的部份一般會特別處理
+     */
+    @SuppressWarnings("unchecked")
+    public ICCParam<?> createParameter(String dt, String name, Object value) {
+        switch (dt) {
+            case ICCType.dt_string:
+                return new CCParam(string_type, name, value);
+            case ICCType.dt_int:
+                return new CCParam(int_type, name, value);
+            case ICCType.dt_long:
+                return new CCParam(long_type, name, value);
+            case ICCType.dt_double:
+                return new CCParam(double_type, name, value);
+            case ICCType.dt_date:
+                return new CCParam(date_type, name, value);
+            default:
+                return new CCParam(var_type, name, value);
+        }
     }
 
 }

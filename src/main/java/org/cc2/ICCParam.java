@@ -7,10 +7,12 @@
 package org.cc2;
 
 /**
+ *
  * @author William
- * @param <RET>
+ * @param <T>  參數型別
  */
-
-public interface ICCFunction<RET> {
-    public RET apply(ICCMap m) throws Exception ; 
+public interface ICCParam<T> {
+    public String name();
+    public T value();
+    public ICCType<T> type();
 }

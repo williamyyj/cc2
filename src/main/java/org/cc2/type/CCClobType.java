@@ -11,7 +11,7 @@ public class CCClobType extends CCBaseType<String> {
         return dt_clob;
     }
 
-    public String value(Object o, String dv) {
+    public String check(Object o, String dv) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

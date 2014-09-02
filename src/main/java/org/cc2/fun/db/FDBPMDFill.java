@@ -17,7 +17,7 @@ import java.util.function.BiConsumer;
  *
  * @author William
  */
-public class FDBPSFill implements BiConsumer<PreparedStatement, Object[]> {
+public class FDBPMDFill implements BiConsumer<PreparedStatement, Object[]> {
 
     @Override
     public void accept(PreparedStatement ps, Object[] params) {

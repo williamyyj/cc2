@@ -5,6 +5,9 @@
  */
 
 package org.cc2.db;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 import org.cc2.ICCDP;
 
@@ -14,9 +17,10 @@ import org.cc2.ICCDP;
  * @param <M> 資料模型
  */
 public interface IDB<M> extends ICCDP<M> {
-   public String base();
    public String database();
    public String schema();
    public String catalog();
-
+   public Connection connection() throws Exception ; 
+   public void close() throws Exception ; 
+   public void __release(ResultSet rs, PreparedStatement ps) throws Exception;
 }

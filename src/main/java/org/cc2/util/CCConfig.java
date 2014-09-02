@@ -1,8 +1,10 @@
-package org.cc2;
+package org.cc2.util;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import org.cc2.CCMap;
+import org.cc2.ICCMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ public class CCConfig extends CCMap {
     }
 
     private void load(String id) {
-        CCMap m = CCCache.load_map(new File(base(), id + ".json"), "UTF-8");
+        ICCMap m = CCCache.load_map(new File(base(), id + ".json"), "UTF-8");
         if (m != null) {
             put(id, m);
         }

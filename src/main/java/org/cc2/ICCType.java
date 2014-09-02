@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cc2.type;
+package org.cc2;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +11,7 @@ import java.sql.SQLException;
 /**
  *
  * @author william
+ * @param <E>
  */
 public interface ICCType<E> {
 
@@ -34,9 +35,9 @@ public interface ICCType<E> {
 
     public int jdbc();
 
-    public E value(Object o);
+    public E check(Object o);
 
-    public E value(Object o, E dv);
+    public E check(Object o, E dv);
 
     public E getRS(ResultSet rs, String name) throws SQLException;
 

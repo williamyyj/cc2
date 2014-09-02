@@ -5,6 +5,7 @@
  */
 package org.cc2;
 
+import org.cc2.util.CCCache;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -42,7 +43,7 @@ public class CCTest {
     public void hello() {
         String prjId = "prj/baphiq";
         String base = CCConst.base(prjId);
-        CCMap m = CCCache.load_map(base, "cfg", "json");
+        ICCMap m = CCCache.load_map(base, "cfg", "json");
         System.out.println(m.toString("\t"));
     }
 

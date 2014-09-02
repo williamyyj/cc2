@@ -4,6 +4,7 @@
  */
 package org.cc2.type;
 
+import org.cc2.ICCType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +12,8 @@ public abstract class CCBaseType<E> implements ICCType<E> {
 
     protected Logger log = LoggerFactory.getLogger(CCBaseType.class);
 
-    public E value(Object o){
-        return value(o,null);
+    public E check(Object o){
+        return check(o,null);
     }
     
     public String json_value(Object value) {
@@ -21,7 +22,7 @@ public abstract class CCBaseType<E> implements ICCType<E> {
 
     @Override
     public String sql_value(Object value) {
-        return (value!=null) ? String.valueOf(value(value)) : "NULL";
+        return (value!=null) ? String.valueOf(check(value)) : "NULL";
     }
     
     @Override

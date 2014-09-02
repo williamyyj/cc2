@@ -16,7 +16,7 @@ public class CCIntType extends CCBaseType<Integer> {
         return dt_int;
     }
 
-    public Integer value(Object o, Integer dv) {
+    public Integer check(Object o, Integer dv) {
         try {
             if (o instanceof Number) {
                 return ((Number) o).intValue();
@@ -38,7 +38,7 @@ public class CCIntType extends CCBaseType<Integer> {
         if (value == null) {
             ps.setNull(idx, Types.INTEGER);
         } else {
-            ps.setInt(idx, value(value, 0));
+            ps.setInt(idx, check(value, 0));
         }
     }
 

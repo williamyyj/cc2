@@ -4,6 +4,7 @@
  */
 package org.cc2.type;
 
+import org.cc2.ICCType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ public class CCVarType extends CCBaseType<Object> {
         return ICCType.dt_var;
     }
 
-    public Object value(Object o, Object dv) {
+    public Object check(Object o, Object dv) {
         return (o!=null) ? o : dv;
     }
 

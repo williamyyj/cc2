@@ -16,7 +16,7 @@ public class CCBlobType extends CCBaseType<byte[]> {
         return dt_blob;
     }
 
-    public byte[] value(Object o, byte[] dv) {
+    public byte[] check(Object o, byte[] dv) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

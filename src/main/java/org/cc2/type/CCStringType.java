@@ -20,7 +20,7 @@ public class CCStringType extends CCBaseType<String> {
         return dt_string;
     }
 
-    public String value(Object o, String dv) {
+    public String check(Object o, String dv) {
         return (o!=null) ? o.toString() : dv;
     }
 

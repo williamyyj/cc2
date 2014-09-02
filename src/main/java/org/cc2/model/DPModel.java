@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 
-package org.cc2;
+package org.cc2.model;
+
+import org.cc2.CCMap;
 
 /**
+ *
  * @author William
- * @param <RET>
  */
-
-public interface ICCFunction<RET> {
-    public RET apply(ICCMap m) throws Exception ; 
+public class DPModel extends CCMap {
+    
 }

@@ -20,16 +20,35 @@ public interface ICCMap extends Map<String, Object> {
         return fun.apply(get(k), dv);
     }
 
-    default int _int(String k) { return as(CC._int,k,0) ; } 
-    
-    default long _long(String k) { return as(CC._long,k,0L) ; } 
-    
-    default double _double(String k) { return as(CC._double,k,0.0) ; } 
+    @SuppressWarnings("unchecked")
+    default <T> T as(Class<T> c, String k) {
+        return (T) get(k);
+    }
 
-    default Date _date(String k) { return as(CC._date,k,new Date()) ; } 
+    default int _int(String k) {
+        return as(CC._int, k, 0);
+    }
+
+    default long _long(String k) {
+        return as(CC._long, k, 0L);
+    }
+
+    default double _double(String k) {
+        return as(CC._double, k, 0.0);
+    }
+
+    default Date _date(String k) {
+        return as(CC._date, k, new Date());
+    }
+
+    default String _string(String k) {
+        return this.getOrDefault(k, "").toString();
+    }
+
+    default String _string(String k, String dv) {
+        return this.getOrDefault(k, dv).toString();
+    }
     
-    default String _string(String k){  return this.getOrDefault(k, "").toString();}
-    
-    default String _string(String k, String dv){  return this.getOrDefault(k, dv).toString();}
-     
+    public String toString(String indent) ; 
+
 }

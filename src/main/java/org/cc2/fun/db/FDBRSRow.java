@@ -12,27 +12,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
-import org.cc2.type.ICCType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.cc2.CCMap;
+import org.cc2.ICCMap;
+import org.cc2.ICCParam;
+import org.cc2.ICCType;
 
 
 /**
  *
  * @author William
  */
-public class FDBRSRow implements BiFunction<List<Map<String,Object>>, ResultSet, Map<String,Object>>{
+public class FDBRSRow implements BiFunction<List<ICCParam>, ResultSet, ICCMap>{
 
     @Override
-    public Map<String, Object> apply(List<Map<String, Object>> meta, ResultSet rs) {
-        Map<String,Object> row = new HashMap<>();
-        meta.forEach(p->{
-            try {
-                String alias = (String) p.get("alias");
-                ICCType<?> type = (ICCType<?>) p.get("type");
-                row.put(alias, type.getRS(rs, alias));
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        });
+    public ICCMap apply(List<ICCParam> params, ResultSet rs) {
+        CCMap row = new CCMap();
+        if(params!=null){
+            params.forEach( p->{
+                try {
+                    row.put(p.name(), p.type().getRS(rs, p.name()) );
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+             }); 
+        }
         return row ; 
     }
    

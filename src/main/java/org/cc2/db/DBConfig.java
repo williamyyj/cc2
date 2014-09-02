@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.cc.org.apache.tomcat.jdbc.pool.PoolProperties;
-import org.cc2.CCConfig;
+import org.cc2.util.CCConfig;
 import org.cc2.CCMap;
 import org.cc2.type.CCTypes;
 
@@ -46,7 +46,7 @@ public class DBConfig extends CCConfig {
         types = new CCTypes(res._string("database"));
     }
 
-    public Connection connection() throws SQLException {
+    public Connection connection() throws Exception {
         if (conn == null) {
             conn = getDataSource(dsId).getConnection();
         }
@@ -102,7 +102,7 @@ public class DBConfig extends CCConfig {
         return types ; 
     }
     
-     protected void __release(ResultSet rs, PreparedStatement ps) throws SQLException {
+     public void __release(ResultSet rs, PreparedStatement ps) throws SQLException {
         if (rs != null) {
             rs.close();
             rs = null;
@@ -113,11 +113,13 @@ public class DBConfig extends CCConfig {
         }
     }
     
-    public void close() throws SQLException{
+    public void close() throws Exception{
         if(conn!=null){
             conn.close();
         }
     }
+    
+    
     
 
     

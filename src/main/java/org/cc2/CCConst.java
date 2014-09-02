@@ -11,6 +11,8 @@ package org.cc2;
  * @author William
  */
 public class CCConst {
+    public final String act_fid = "$fid";
+    public final String act_aid = "$aid";
     
     public static String root = "C:/Users/William/Dropbox/resources";
     

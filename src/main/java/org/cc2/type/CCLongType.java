@@ -19,7 +19,7 @@ public class CCLongType extends CCBaseType<Long> {
         return dt_long;
     }
 
-    public Long value(Object o, Long dv) {
+    public Long check(Object o, Long dv) {
         try {
             if (o instanceof Number) {
                 return ((Number) o).longValue();
@@ -41,7 +41,7 @@ public class CCLongType extends CCBaseType<Long> {
         if (value == null) {
             ps.setNull(idx, Types.DECIMAL);
         } else {
-            ps.setLong(idx, value(value,0L));
+            ps.setLong(idx, check(value,0L));
         }
     }
 

@@ -23,7 +23,7 @@ public class sqlite_date extends CCDateType {
         if (value == null) {
             ps.setNull(idx, Types.TIMESTAMP);
         } else {
-            Date d = value(value);
+            Date d = check(value);
             SimpleDateFormat sdf = new SimpleDateFormat(fmt_datetime);
             ps.setObject(idx, sdf.format(d));
         }

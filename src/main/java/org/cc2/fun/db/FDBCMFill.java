@@ -13,37 +13,28 @@ import java.util.function.BiConsumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.cc2.CC;
-import org.cc2.type.CCTypes;
-import org.cc2.type.ICCType;
+import org.cc2.ICCParam;
+import org.cc2.ICCType;
 
 /**
  *
  * @author William
  */
-public class FDBCMFill implements BiConsumer<PreparedStatement, Map<String, Object>> {
+public class FDBCMFill implements BiConsumer<PreparedStatement,List<ICCParam>> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public void accept(PreparedStatement ps, Map<String, Object> cm) {
-        List<Object> cols = CC.as(List.class, cm, "$cols");
-        if (cols != null) {
-            int idx = 1;
-            for (Object o : cols) {
-                String k = (String) o;
-                Map m = CC.as(Map.class, cm, k);
-                proc_set_ps(ps, idx++, m);
+    public void accept(PreparedStatement ps, List<ICCParam> params) {
+        if(params!=null && params.size()>0){
+            int idx = 1 ; 
+            for(ICCParam p : params){
+                try {
+                    p.type().setPS(ps, idx++, p.value());
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private void proc_set_ps(PreparedStatement ps, int idx, Map m) {
-        try {
-            ICCType type = CC.as(ICCType.class, m, "type");
-            Object value = m.get("value");
-            type.setPS(ps, idx, value);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
 }

@@ -18,7 +18,7 @@ public class CCDoubleType extends CCBaseType<Double> {
     }
 
     @Override
-    public Double value(Object o, Double dv) {
+    public Double check(Object o, Double dv) {
         try {
             if (o instanceof Number) {
                 return ((Number) o).doubleValue();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.cc2;
 
 import java.text.SimpleDateFormat;
@@ -16,11 +11,26 @@ import org.cc2.fun.ccprint_map;
 import org.cc2.fun.text_quote;
 
 /**
- *
  * @author William
  */
+
 public class CC {
 
+    public final static String dp_cmd = "$cmd" ; 
+    public final static String dp_fid = "$fid" ; 
+    public final static String dp_aid = "$aid" ; 
+    public final static String dp_sql = "$sql" ; 
+    public final static String dp_params = "$params" ;
+    public final static String dp_ret = "$ret" ;
+    public final static String dp_error = "$error" ;
+    public final static String dp_target = "$target" ; 
+    
+    public enum act {
+        list,add,edit,delete,upload,row,rows,xml,csv,json,html
+    }
+    
+   
+    
     public static BiFunction<Object, Integer, Integer> _int = (o, dv) -> {
         if (o instanceof Number) {
             return ((Number) o).intValue();

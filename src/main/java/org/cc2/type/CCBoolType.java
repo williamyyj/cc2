@@ -18,7 +18,7 @@ public class CCBoolType extends CCBaseType<Boolean> {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public Boolean value(Object o, Boolean dv) {
+    public Boolean check(Object o, Boolean dv) {
         if (o instanceof Boolean) {
             return ((Boolean) o);
         } else if (o instanceof String) {
@@ -32,7 +32,7 @@ public class CCBoolType extends CCBaseType<Boolean> {
     }
 
     public Boolean getRS(ResultSet rs, String name) throws SQLException {
-        return value(rs.getObject(name));
+        return check(rs.getObject(name));
     }
 
     public void setPS(PreparedStatement ps, int idx, Object value) throws SQLException {

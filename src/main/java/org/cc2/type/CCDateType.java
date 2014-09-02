@@ -19,7 +19,7 @@ public class CCDateType extends CCBaseType<Date> {
         return dt_date;
     }
 
-    public Date value(Object o, Date dv) {
+    public Date check(Object o, Date dv) {
         if (o instanceof Date) {
             return (Date) o;
         } else if (o instanceof String) {
@@ -65,7 +65,7 @@ public class CCDateType extends CCBaseType<Date> {
     }
 
     public void setPS(PreparedStatement ps, int idx, Object value) throws SQLException {
-        Date d = value(value);
+        Date d = check(value);
         if (value == null) {
             ps.setNull(idx, Types.TIMESTAMP);
         } else {
