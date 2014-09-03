@@ -13,25 +13,25 @@ import org.cc2.fun.text_quote;
 /**
  * @author William
  */
-
 public class CC {
 
-    public final static String dp_cmd = "$cmd" ; 
-    public final static String dp_fid = "$fid" ; 
-    public final static String dp_aid = "$aid" ; 
-    public final static String dp_sql = "$sql" ; 
-    public final static String dp_params = "$params" ;
-    public final static String dp_ret = "$ret" ;
-    public final static String dp_error = "$error" ;
-    public final static String dp_target = "$target" ; 
-    public final static String dp_conn = "$conn" ; 
-    
+    public final static String dp_cmd = "$cmd";
+    public final static String dp_fid = "$fid";
+    public final static String dp_aid = "$aid";
+    public final static String dp_sql = "$sql";
+    public final static String dp_params = "$params";
+    public final static String dp_ret = "$ret";
+    public final static String dp_error = "$error";
+    public final static String dp_target = "$target";
+    public final static String dp_conn = "$conn";
+    public final static String dp_ps = "$ps";
+    public final static String dp_rs = "$rs";
+
     public enum act {
-        list,add,edit,delete,upload,row,rows,xml,csv,json,html
+
+        list, add, edit, delete, upload, row, rows, xml, csv, json, html
     }
-    
-   
-    
+
     public static BiFunction<Object, Integer, Integer> _int = (o, dv) -> {
         if (o instanceof Number) {
             return ((Number) o).intValue();
@@ -123,7 +123,7 @@ public class CC {
             sb.append(value);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public static <T> T as(Class<T> c, Map<String, Object> cm, String k) {
         return (T) cm.get(k);

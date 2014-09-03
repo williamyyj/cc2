@@ -23,15 +23,15 @@ import org.slf4j.LoggerFactory;
  *
  *
  */
-public class QueryModel {
+public class DBActionModel {
 
-    private final static Logger log = LoggerFactory.getLogger(QueryModel.class);
+    private final static Logger log = LoggerFactory.getLogger(DBActionModel.class);
     private final static Pattern p = Pattern.compile("\\$\\{([^\\}]+)\\}");
 
     public static ICCMap parser_command(IDB db, String fid, String aid, ICCMap row) throws Exception {
         File f = new File(db.base(), "module/" + fid + ".dao");
         ICCMap dao = CCCache.load_map(f, "UTF-8");      
-        String cmd = QueryItem.get_command(dao, aid);
+        String cmd = DBActionItem.get_command(dao, aid);
         System.out.println(cmd);
         ICCMap model = new CCMap();
         model.put(CC.dp_params, new CCList());     
@@ -42,10 +42,10 @@ public class QueryModel {
             m.appendReplacement(sql, ""); // 直接清空
             if (!item.startsWith("rem")) {
                 if (dao.containsKey(item)) {
-                    String cmd_item = QueryItem.get_command(dao, item); //這部份不支援 recursive
+                    String cmd_item = DBActionItem.get_command(dao, item); //這部份不支援 recursive
                     sql.append(cmd_item);
                 } else {
-                    QueryItem.process_item(db, sql, model, row, item);
+                    DBActionItem.process_item(db, sql, model, row, item);
                 }
             }
         }
@@ -63,7 +63,7 @@ public class QueryModel {
         while (m.find()) {
             String item = m.group(1);
             m.appendReplacement(sql, ""); // 直接清空
-            QueryItem.process_item(db, sql, model, row, item);
+            DBActionItem.process_item(db, sql, model, row, item);
         }
         m.appendTail(sql);
          model.put(CC.dp_sql, sql);

@@ -4,11 +4,10 @@ import org.cc2.type.CCTypes;
 
 /**
  * @author William 取代IDB提供不同資料來源資料異動
- * @param <PARAM> fid/actId
  */
-public interface ICCDP<PARAM> {
+public interface ICCDP {
     
-    public Object action(String fid, String aid, PARAM params) throws Exception ;
+    public Object action(String fid, String aid, ICCMap params) throws Exception ;
     
     public CCTypes types();
 
