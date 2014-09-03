@@ -3,12 +3,8 @@ package org.cc2.db;
 import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import org.cc2.CC;
@@ -18,7 +14,6 @@ import org.cc2.ICCList;
 import org.cc2.ICCMap;
 import org.cc2.ICCParam;
 import org.cc2.fun.db.FDBCMFill;
-import org.cc2.fun.db.FDBPMDFill;
 import org.cc2.fun.db.FDBPSParams;
 import org.cc2.fun.db.FDBRSMeta;
 import org.cc2.fun.db.FDBRSRow;
@@ -131,7 +126,6 @@ public class DB extends DBConfig implements IDB<ICCMap> {
         String aid = qm._string(CC.dp_aid);
         String sql = qm._string(CC.dp_sql);
         CC.act act = CC.act.valueOf(aid);
-
         return null;
     }
 
@@ -161,9 +155,9 @@ public class DB extends DBConfig implements IDB<ICCMap> {
         ICCMap dao = CCCache.load_map(f, "UTF-8");
         return dao.as(ICCMap.class, aid);
     }
-    
-    
+
     public static void main(String[] args) throws Exception {
+        long ts = System.nanoTime();
         String base = System.getProperty("base", "C:\\Users\\William\\Dropbox\\resources\\prj\\sonix");
         DB db = new DB(base, "db");
         try {
@@ -178,6 +172,9 @@ public class DB extends DBConfig implements IDB<ICCMap> {
         } finally {
             db.close();
         }
+        long te = System.nanoTime();
+        System.out.println("===== time : " + (te - ts) / 1E9);
+       
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.sql.DataSource;
 import org.cc.org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.cc2.CC;
 import org.cc2.util.CCConfig;
 import org.cc2.CCMap;
 import org.cc2.type.CCTypes;
@@ -22,9 +23,8 @@ import org.cc2.type.CCTypes;
 public class DBConfig extends CCConfig {
 
     protected static Map<String, DataSource> mds;
-    private Connection conn;
     private String dsId ;
-    protected CCMap res ;
+    protected CCMap db_cfg ;
     protected CCTypes types ; 
     
     
@@ -38,17 +38,19 @@ public class DBConfig extends CCConfig {
     }
     
     private void __init__(String id){
-       res = (CCMap) get(id);
-        if(res==null){
+       db_cfg = (CCMap) get(id);
+        if(db_cfg==null){
             throw new RuntimeException("Can't find tag id");
         }
-        dsId = res._string("id","dsId"); 
-        types = new CCTypes(res._string("database"));
+        dsId = db_cfg._string("id","dsId"); 
+        types = new CCTypes(db_cfg._string("database"));
     }
 
     public Connection connection() throws Exception {
+        Connection conn = (Connection) db_cfg.get(CC.dp_conn);
         if (conn == null) {
             conn = getDataSource(dsId).getConnection();
+            db_cfg.put(CC.dp_conn,conn);
         }
         return conn;
     }
@@ -58,10 +60,10 @@ public class DBConfig extends CCConfig {
         if (old == null) {
             try {
                 PoolProperties p = new PoolProperties();
-                p.setUrl(res._string("url"));
-                p.setDriverClassName(res._string("driver"));
-                p.setUsername(res._string("user"));
-                p.setPassword(res._string("password"));
+                p.setUrl(db_cfg._string("url"));
+                p.setDriverClassName(db_cfg._string("driver"));
+                p.setUsername(db_cfg._string("user"));
+                p.setPassword(db_cfg._string("password"));
                 p.setJmxEnabled(true);
                 p.setTestWhileIdle(false);
                 p.setTestOnBorrow(true);
@@ -114,6 +116,7 @@ public class DBConfig extends CCConfig {
     }
     
     public void close() throws Exception{
+        Connection conn = (Connection) db_cfg.get(CC.dp_conn);
         if(conn!=null){
             conn.close();
         }

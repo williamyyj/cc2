@@ -24,6 +24,7 @@ public class CC {
     public final static String dp_ret = "$ret" ;
     public final static String dp_error = "$error" ;
     public final static String dp_target = "$target" ; 
+    public final static String dp_conn = "$conn" ; 
     
     public enum act {
         list,add,edit,delete,upload,row,rows,xml,csv,json,html
