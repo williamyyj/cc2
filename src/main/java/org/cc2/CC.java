@@ -3,6 +3,7 @@ package org.cc2;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -28,7 +29,6 @@ public class CC {
     public final static String dp_rs = "$rs";
 
     public enum act {
-
         list, add, edit, delete, upload, row, rows, xml, csv, json, html
     }
 
@@ -128,5 +128,5 @@ public class CC {
     public static <T> T as(Class<T> c, Map<String, Object> cm, String k) {
         return (T) cm.get(k);
     }
-
+    
 }

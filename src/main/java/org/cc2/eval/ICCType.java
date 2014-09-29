@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package org.cc2.el;
+package org.cc2.eval;
 
 /**
  *
